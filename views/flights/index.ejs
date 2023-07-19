@@ -1,0 +1,20 @@
+<%- include('../partials/header') %>
+
+  <ul>
+    <% flights.forEach(function(flight) { %>
+      <li>
+        <a href="/flights/<%= flight.id %>">detail</a>
+          - 
+          <%= flight.airport %>
+          <%= flight.airline %>
+          <%= flight.departs %>
+          <%= flight.flightNo %>
+          <%= flight.destinations %>
+      </li>
+    <% }); %>
+  </ul>
+  <form action="/flights/new" method="GET">
+      <input type="submit" value= "Add Flight">  
+  </form>
+
+<%- include('../partials/footer') %>
