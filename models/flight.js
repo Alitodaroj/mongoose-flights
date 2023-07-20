@@ -44,7 +44,7 @@ const ticketSchema = new mongoose.Schema( {
       type: Number,
     }  
  }, {
-  timestamps:trye
+  timestamps: true
  })
 
 

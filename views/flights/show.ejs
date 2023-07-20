@@ -1,11 +1,11 @@
 <%- include('../partials/header') %>
-
+ 
   <h3><%= flight.airport %></h3>
   <h3><%= flight.airline %></h3>
   <h3><%= flight.departs %></h3>
   <h3><%= flight.flightNo %></h3>
   <h3><%= flight.destination %></h3>
-  <h3><%= flight.arrival %></h3>
+  <h3><%= flight.arrival%></h3> 
 
   
   <form>
@@ -19,24 +19,28 @@
     <input type = "submit" value = "Submit">
   </form>        
 
-</section>
 
-<form id="add-per-to-ticket" action="/flights/<%= flight._id %>/tickets" method="POST">
-  <select name="ticketId">
-    <%- tickets.map(t => 
-      `<option value="${t._id}">${t.seat} $${t.price} ${t.flightNo}</option> `
-    ) %>
-  </select>
-  <button type="submit">Tickets</button>
+ <form id="add-per-to-ticket" action="/flights/<%= flight._id %>/tickets" method="POST">
+  <input type= "text" name="seat">
+  <input type= "number" name="price">
+  <input type= "number" name="flight">
+<button type="submit">Tickets</button>
 </form>
   
 <br><br><h2>Destinations</h2>
+ <% flight.destinations.forEach(function(r) { %>        
+          <p><%= r.airport %></p>
+          <p><%= r.arrival %></p>
+      <% }); %>
+
 <form id="add-destination" method="POST"
   action="/flights/<%= flight._id %>/destinations">
-  <!-- <label>Destination:</label>
-  <textarea name="content"></textarea> -->
-  <label>Airport:
-    <input type="text" name="airport">
+  <select name="airport">
+    <option value="LAX">LAX</option>
+    <option value="JFK">JFK</option>
+    <option value="AUS">AUS</option>
+    <option value="DEN">DEN</option>
+  </select>
   <label>Arrival:
     <input type="datetime-local" name="arrival">
   </label><br>

@@ -1,8 +1,9 @@
 const Flight = require('../models/flight');
-
+// const Ticket = require('../models/ticket');
 async function show(req, res) {
     const flight = await Flight.findById(req.params.id);
-    res.render('flights/show', {title: "Flight Details", flight})  
+    res.render('flights/show', {title: 'Flight Details', flight})
+    
   }
   
   async function index(req, res) {
@@ -14,32 +15,45 @@ async function show(req, res) {
     res.render('flights/new', { title: 'Add Flight', errorMsg: '' })
   }
 
-  async function create(req, res) 
-  {console.log(req.body)
-    // convert nowShowing's checkbox of nothing or "on" to boolean
+  async function create(req, res) {
+ 
+    
     
   try {
       await Flight.create(req.body);
-      // Always redirect after CUDing data
-      // We'll refactor to redirect to the movies index after we implement it
-      res.redirect('/flights');  // Update this line
+      
+      res.redirect('/flights');  
     } catch (err) {
-      // Typically some sort of validation error
       console.log(err);
       res.render('flights/new', { errorMsg: err.message });
     }
   }
   async function addTicket(req, res) {
-    try{
+    const flight = await Flight.find({});
     const ticket = await ticket.find({}).sort('name');
-    res.render('ticket/new', { title: 'Add Ticket', ticket });
+    res.render('ticket/new', { title: 'Add Ticket', flight, ticket});
   }
-}
 
+  async function addDestination(req, res) {
+    const flights = await Flight.findById(req.params.id);
+  
+  flights.destinations.push(req.body);
+  try {
+    await flights.save();
+  } catch (err) {
+    console.log(err);
+  }
+ 
+  res.redirect(`/flights/${flights._id}`);
+}
+  
+
+  
   module.exports = {
     index, 
     show,
     newFlight,
     create,
-    addTicket
+    addTicket,
+    addDestination
   }
